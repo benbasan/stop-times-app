@@ -1,12 +1,13 @@
 {
-  "name": "stop-times-app",
+  "name": "bus-stop-arrivals-app",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -17,9 +18,12 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.10",
+    "eslint": "^9.5.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.9",
     "typescript": "^5.5.4",
-    "vite": "^5.4.3"
+    "vite": "^5.4.0"
   }
 }
