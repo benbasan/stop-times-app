@@ -43,6 +43,8 @@ export default function StopLookup({ prefillStop }: StopLookupProps) {
 
   // FavoritesContext for stops
   const { favorites, addFavorite, removeFavorite } = useFavorites();
+  // State for custom stop name when adding to favorites
+  const [customStopName, setCustomStopName] = React.useState<string>("");
   const isStopFavorite = React.useMemo(() => (
     stop?.code ? favorites.some(x => x.id === stop.code) : false
   ), [favorites, stop]);
@@ -142,22 +144,34 @@ export default function StopLookup({ prefillStop }: StopLookupProps) {
             תחנה {stop.code} · {stop.name}
           </div>
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              className={[
-                "px-3 py-1.5 rounded-full text-sm border",
-                isStopFavorite ? "bg-green-100 border-green-300" : "bg-gray-50 border-gray-300"
-              ].join(" ")}
-              onClick={() => {
-                if (!stop) return;
-                if (isStopFavorite) removeFavorite(stop.code);
-                else addFavorite({ id: stop.code, name: stop.name });
-              }}
-              title={isStopFavorite ? "הסר תחנה מהמועדפים" : "הוסף תחנה למועדפים"}
-              aria-pressed={isStopFavorite}
-            >
-              {isStopFavorite ? "הסר תחנה מהמועדפים" : "הוסף תחנה למועדפים"}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                className={[
+                  "px-3 py-1.5 rounded-full text-sm border",
+                  isStopFavorite ? "bg-green-100 border-green-300" : "bg-gray-50 border-gray-300"
+                ].join(" ")}
+                onClick={() => {
+                  if (!stop) return;
+                  if (isStopFavorite) removeFavorite(stop.code);
+                  else addFavorite({ id: stop.code, name: customStopName.trim() || stop.name || "" });
+                }}
+                title={isStopFavorite ? "הסר תחנה מהמועדפים" : "הוסף תחנה למועדפים"}
+                aria-pressed={isStopFavorite}
+              >
+                {isStopFavorite ? "הסר תחנה מהמועדפים" : "הוסף תחנה למועדפים"}
+              </button>
+              {!isStopFavorite && (
+                <input
+                  type="text"
+                  value={customStopName}
+                  onChange={e => setCustomStopName(e.target.value)}
+                  placeholder="שם מותאם (לא חובה)"
+                  className="px-2 py-1 rounded border text-sm"
+                  style={{ minWidth: 0, width: '120px' }}
+                />
+              )}
+            </div>
 
             <button
               type="button"
